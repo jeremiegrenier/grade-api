@@ -1,0 +1,22 @@
+version: '3'
+services:
+  grade-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: grade-api
+    ports:
+      - 81:80
+    volumes:
+      - .:/var/www
+  database:
+    image: postgres
+    ports:
+      - "5432"
+    env_file:
+      - database.env
+    expose:
+      - 5432
+
+volumes:
+  grade-db:
