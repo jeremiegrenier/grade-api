@@ -29,6 +29,15 @@ docker-logs:
 docker-fix-permissions:
 	docker-compose run --rm grade-api chown -R $$(id -u):$$(id -g) .
 
+## Install dependency inside docker image
+build:
+	composer validate
+	composer install
+
+## Run cs fixer to linf php files
+cs: build
+	vendor/bin/php-cs-fixer fix --config=.php_cs --diff --verbose
+
 
 ## ------
 

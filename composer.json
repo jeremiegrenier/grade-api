@@ -1,6 +1,8 @@
 {
     "type": "project",
     "license": "proprietary",
+    "name": "jgrenier/grade-api",
+    "description": "Api to manage grade",
     "require": {
         "php": "^7.1.3",
         "ext-ctype": "*",
@@ -17,6 +19,7 @@
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
+        "coffreo/php-cs-fixer-config": "^2.3"
     },
     "config": {
         "preferred-install": {
