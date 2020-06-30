@@ -2,7 +2,7 @@
 SHELL := /bin/bash
 
 ## Clean system from docker image
-clean:
+docker-clean:
 	docker system prune -a -f
 
 ## Build docker image
