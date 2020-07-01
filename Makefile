@@ -38,6 +38,19 @@ build:
 cs: build
 	vendor/bin/php-cs-fixer fix --config=.php_cs --diff --verbose
 
+## Run tests
+test: build
+	php bin/console --env=test doctrine:database:create
+	php bin/console --env=test doctrine:schema:create
+	php bin/phpunit
+	php bin/console --env=test doctrine:database:drop --force
+
+## Run tests unitaire
+test-unit: build
+	php bin/phpunit --testsuite unit
+
+## Clean code and run tests
+it: build cs test
 
 ## ------
 
