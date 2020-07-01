@@ -64,6 +64,7 @@ class Classroom implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
+            'id' => $this->id,
             'students' => \array_map(static function (Student $student) {
                 return $student->jsonSerialize();
             }, $this->students->toArray()),

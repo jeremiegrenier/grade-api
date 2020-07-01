@@ -46,13 +46,13 @@ class StudentRepository extends ServiceEntityRepository
     /**
      * Update a field inside Student entity.
      *
-     * @param string $studentId Id of student
+     * @param int    $studentId Id of student
      * @param string $field     Field name to update
      * @param string $value     Value to put inside
      *
      * @return mixed
      */
-    public function updateField(string $studentId, string $field, string $value)
+    public function updateField(int $studentId, string $field, string $value)
     {
         return $this->getEntityManager()->createQueryBuilder()
             ->update(Student::class, 's')
