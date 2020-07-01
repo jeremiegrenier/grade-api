@@ -12,3 +12,10 @@
 ###> friendsofphp/php-cs-fixer ###
 /.php_cs.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+tests/coverage
+###< symfony/phpunit-bridge ###

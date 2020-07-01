@@ -8,6 +8,18 @@
     "composer/xdebug-handler": {
         "version": "1.4.2"
     },
+    "dama/doctrine-test-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "56eaa387b5e48ebcc7c95a893b47dfa1ad51449c"
+        },
+        "files": [
+            "config/packages/test/dama_doctrine_test_bundle.yaml"
+        ]
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -120,6 +132,9 @@
     "psr/log": {
         "version": "1.1.3"
     },
+    "symfony/browser-kit": {
+        "version": "v4.4.10"
+    },
     "symfony/cache": {
         "version": "v4.4.10"
     },
@@ -149,6 +164,9 @@
         "version": "v4.4.10"
     },
     "symfony/doctrine-bridge": {
+        "version": "v4.4.10"
+    },
+    "symfony/dom-crawler": {
         "version": "v4.4.10"
     },
     "symfony/dotenv": {
@@ -212,6 +230,21 @@
     },
     "symfony/options-resolver": {
         "version": "v4.4.10"
+    },
+    "symfony/phpunit-bridge": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6d0e35f749d5f4bfe1f011762875275cd3f9874f"
+        },
+        "files": [
+            ".env.test",
+            "bin/phpunit",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php"
+        ]
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.17.1"
