@@ -13,7 +13,9 @@ use App\Helper\ValidHelper;
 use App\Operation\StudentOperationProcessor;
 use App\Repository\ClassroomRepository;
 use App\Repository\StudentRepository;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Psr\Log\LoggerInterface;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +33,44 @@ use Symfony\Component\Routing\Annotation\Route;
 class StudentController extends AbstractController
 {
     /**
+     * Create a student.
+     *
      * @Route("", methods={"POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the id of the student created",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="student", type="string")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=400,
+     *     description="Content is invalid",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="wrong content")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Classroom doesn't exist",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="classroom invalid")
+     *     )
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="",
+     *     in="body",
+     *     description="student",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="firstname", type="string"),
+     *         @SWG\Property(property="lastname", type="string"),
+     *         @SWG\Property(property="birthdate", type="string", format="date"),
+     *         @SWG\Property(property="classroom", type="integer"),
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="students")
      */
     public function createStudent(
         Request $request,
@@ -103,7 +142,23 @@ class StudentController extends AbstractController
     }
 
     /**
+     * Get details of a student.
+     *
      * @Route("/{studentId}", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the detail of the student",
+     *     @Model(type=Student::class)
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Student not found",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="student not found")
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="students")
      */
     public function getStudent(
         string $studentId,
@@ -142,7 +197,47 @@ class StudentController extends AbstractController
     }
 
     /**
+     * Update a student.
+     *
      * @Route("/{studentId}", methods={"PATCH"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Student is updated",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="ok")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=400,
+     *     description="Content is invalid",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="wrong content")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Student doesn't exist",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="student not found")
+     *     )
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="",
+     *     in="body",
+     *     description="List of operations to update the student",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(
+     *              type="object",
+     *              @SWG\Property(property="op", type="string", example="replace"),
+     *              @SWG\Property(property="value", type="string", example="firstname"),
+     *              @SWG\Property(property="field", type="string", example="newValue"),
+     *         )
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="students")
      */
     public function patchStudent(
         string $studentId,
@@ -223,7 +318,42 @@ class StudentController extends AbstractController
     }
 
     /**
+     * Add a grade to a student.
+     *
      * @Route("/{studentId}/grades", methods={"POST"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Grade is added",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="ok")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=400,
+     *     description="Content is invalid",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="wrong content")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Student doesn't exist",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="student not found")
+     *     )
+     * )
+     *
+     * @SWG\Parameter(
+     *     name="",
+     *     in="body",
+     *     description="The grade for the student",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="value", type="number", format="float"),
+     *         @SWG\Property(property="subject", type="string"),
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="students")
      */
     public function addGradeToStudent(
         string $studentId,
@@ -308,7 +438,25 @@ class StudentController extends AbstractController
     }
 
     /**
+     * Delete a student.
+     *
      * @Route("/{studentId}", methods={"DELETE"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Student removed",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="ok")
+     *     )
+     * )
+     * @SWG\Response(
+     *     response=404,
+     *     description="Student doesn't exist",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="message", type="string", example="student not found")
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="students")
      */
     public function deleteStudent(
         string $studentId,
