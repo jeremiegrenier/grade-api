@@ -25,4 +25,4 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
 WORKDIR /var/www
 
-CMD php -S 0.0.0.0:80 /var/www/public/index.php
+CMD php -S 0.0.0.0:80  -t /var/www/public
