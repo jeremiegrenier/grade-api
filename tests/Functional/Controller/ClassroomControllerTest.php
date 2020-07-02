@@ -28,7 +28,7 @@ class ClassroomControllerTest extends AbstractFunctionalTest
      */
     public function test_createStudent_validBody_classroomDoNotExist_shouldReturnBadRequest(): void
     {
-        $client = $this->createJsonRequest(static::POST, '/classrooms');
+        $client = $this->createJsonRequest(static::POST, '/api/classrooms');
 
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -40,7 +40,7 @@ class ClassroomControllerTest extends AbstractFunctionalTest
         $classroomId = $content['classroom'];
 
         //check classroom is created
-        $client = $this->createJsonRequest(static::GET, '/classrooms/'.$classroomId);
+        $client = $this->createJsonRequest(static::GET, '/api/classrooms/'.$classroomId);
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);

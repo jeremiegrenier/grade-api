@@ -105,7 +105,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_createStudent_invalidBody_shouldReturnBadRequest(?array $content): void
     {
-        $client = $this->createJsonRequest(static::POST, '/students', null !== $content ? \json_encode($content) : null);
+        $client = $this->createJsonRequest(static::POST, '/api/students', null !== $content ? \json_encode($content) : null);
 
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -130,7 +130,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'classroom' => 9999999,
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students', \json_encode($content));
 
         $this->assertEquals(JsonResponse::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -149,7 +149,7 @@ class StudentControllerTest extends AbstractFunctionalTest
     public function test_createStudent_validBody_shouldReturnStudentIdAndCreateIt(): void
     {
         //create classroom
-        $client = $this->createJsonRequest(static::POST, '/classrooms');
+        $client = $this->createJsonRequest(static::POST, '/api/classrooms');
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -165,7 +165,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'classroom' => $classroomId,
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students', \json_encode($content));
 
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -177,7 +177,7 @@ class StudentControllerTest extends AbstractFunctionalTest
 
         $studentId = $content['student'];
         //check student is created
-        $client = $this->createJsonRequest(static::GET, '/students/'.$studentId);
+        $client = $this->createJsonRequest(static::GET, '/api/students/'.$studentId);
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -203,7 +203,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_getStudent_studentNotExist_shouldReturnNotFound(): void
     {
-        $client = $this->createJsonRequest(static::GET, '/students/999999999');
+        $client = $this->createJsonRequest(static::GET, '/api/students/999999999');
         $this->assertEquals(JsonResponse::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -217,7 +217,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_patchStudent_noOperations_shouldReturnBadRequest(): void
     {
-        $client = $this->createJsonRequest(static::PATCH, '/students/1', null);
+        $client = $this->createJsonRequest(static::PATCH, '/api/students/1', null);
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -239,7 +239,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             ],
         ];
 
-        $client = $this->createJsonRequest(static::PATCH, '/students/1', \json_encode($content));
+        $client = $this->createJsonRequest(static::PATCH, '/api/students/1', \json_encode($content));
         $this->assertEquals(JsonResponse::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -253,7 +253,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_patchStudent_operationInvalid_shouldReturnBadRequest(): void
     {
-        $client = $this->createJsonRequest(static::POST, '/classrooms');
+        $client = $this->createJsonRequest(static::POST, '/api/classrooms');
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -269,7 +269,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'classroom' => $classroomId,
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students', \json_encode($content));
 
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -289,7 +289,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             ],
         ];
 
-        $client = $this->createJsonRequest(static::PATCH, '/students/'.$studentId, \json_encode($content));
+        $client = $this->createJsonRequest(static::PATCH, '/api/students/'.$studentId, \json_encode($content));
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -303,7 +303,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_patchStudent_operationValid_shouldReturnOkAndUpdateStudent(): void
     {
-        $client = $this->createJsonRequest(static::POST, '/classrooms');
+        $client = $this->createJsonRequest(static::POST, '/api/classrooms');
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -319,7 +319,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'classroom' => $classroomId,
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students', \json_encode($content));
 
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -339,7 +339,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             ],
         ];
 
-        $client = $this->createJsonRequest(static::PATCH, '/students/'.$studentId, \json_encode($content));
+        $client = $this->createJsonRequest(static::PATCH, '/api/students/'.$studentId, \json_encode($content));
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -348,7 +348,7 @@ class StudentControllerTest extends AbstractFunctionalTest
         $this->assertEquals('ok', $content['message']);
 
         //check student is updated
-        $client = $this->createJsonRequest(static::GET, '/students/'.$studentId);
+        $client = $this->createJsonRequest(static::GET, '/api/students/'.$studentId);
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -374,7 +374,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_addGradeToStudent_invalidData_shouldReturnBadRequest(): void
     {
-        $client = $this->createJsonRequest(static::POST, '/students/1/grades', null);
+        $client = $this->createJsonRequest(static::POST, '/api/students/1/grades', null);
         $this->assertEquals(JsonResponse::HTTP_BAD_REQUEST, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -393,7 +393,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'subject' => 'test',
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students/1/grades', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students/1/grades', \json_encode($content));
         $this->assertEquals(JsonResponse::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -407,7 +407,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_addGradeToStudent_operationValid_shouldReturnOkAndUpdateStudent(): void
     {
-        $client = $this->createJsonRequest(static::POST, '/classrooms');
+        $client = $this->createJsonRequest(static::POST, '/api/classrooms');
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -423,7 +423,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'classroom' => $classroomId,
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students', \json_encode($content));
 
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -434,7 +434,7 @@ class StudentControllerTest extends AbstractFunctionalTest
         $studentId = $content['student'];
 
         //check student has no grades
-        $client = $this->createJsonRequest(static::GET, '/students/'.$studentId);
+        $client = $this->createJsonRequest(static::GET, '/api/students/'.$studentId);
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -459,7 +459,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'subject' => 'test',
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students/'.$studentId.'/grades', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students/'.$studentId.'/grades', \json_encode($content));
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -468,7 +468,7 @@ class StudentControllerTest extends AbstractFunctionalTest
         $this->assertEquals('ok', $content['message']);
 
         //check student is updated
-        $client = $this->createJsonRequest(static::GET, '/students/'.$studentId);
+        $client = $this->createJsonRequest(static::GET, '/api/students/'.$studentId);
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -495,7 +495,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_deleteStudent_studentNotExist_shouldReturnNotFound(): void
     {
-        $client = $this->createJsonRequest(static::DELETE, '/students/1');
+        $client = $this->createJsonRequest(static::DELETE, '/api/students/1');
         $this->assertEquals(JsonResponse::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -509,7 +509,7 @@ class StudentControllerTest extends AbstractFunctionalTest
      */
     public function test_deleteStudent_student_shouldReturnOkAndRemoveStudent(): void
     {
-        $client = $this->createJsonRequest(static::POST, '/classrooms');
+        $client = $this->createJsonRequest(static::POST, '/api/classrooms');
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -525,7 +525,7 @@ class StudentControllerTest extends AbstractFunctionalTest
             'classroom' => $classroomId,
         ];
 
-        $client = $this->createJsonRequest(static::POST, '/students', \json_encode($content));
+        $client = $this->createJsonRequest(static::POST, '/api/students', \json_encode($content));
 
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
@@ -536,7 +536,7 @@ class StudentControllerTest extends AbstractFunctionalTest
         $studentId = $content['student'];
 
         //check student exist
-        $client = $this->createJsonRequest(static::GET, '/students/'.$studentId);
+        $client = $this->createJsonRequest(static::GET, '/api/students/'.$studentId);
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -546,7 +546,7 @@ class StudentControllerTest extends AbstractFunctionalTest
         $this->assertArrayHasKey('id', $content['student']);
         $this->assertEquals($studentId, $content['student']['id']);
 
-        $client = $this->createJsonRequest(static::DELETE, '/students/'.$studentId);
+        $client = $this->createJsonRequest(static::DELETE, '/api/students/'.$studentId);
         $this->assertEquals(JsonResponse::HTTP_OK, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
@@ -555,7 +555,7 @@ class StudentControllerTest extends AbstractFunctionalTest
         $this->assertEquals('ok', $content['message']);
 
         //check student not exist
-        $client = $this->createJsonRequest(static::GET, '/students/'.$studentId);
+        $client = $this->createJsonRequest(static::GET, '/api/students/'.$studentId);
         $this->assertEquals(JsonResponse::HTTP_NOT_FOUND, $client->getResponse()->getStatusCode());
         $content = $client->getResponse()->getContent();
         $this->assertJson($content);
