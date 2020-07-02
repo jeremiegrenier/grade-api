@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,9 +24,12 @@ class DefaultController extends AbstractController
 {
     /**
      * @Route("/ping", methods={"GET"})
+     * @Route("/", methods={"GET"}, name="homepage")
      */
-    public function testApi(): JsonResponse
+    public function testApi(LoggerInterface $logger): JsonResponse
     {
+        $logger->info('Test API is working');
+
         return new JsonResponse(['ping' => 'pong'], jsonResponse::HTTP_OK);
     }
 }
