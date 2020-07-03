@@ -1,7 +1,7 @@
 version: '3'
 services:
   grade-api:
-    image: jeremiegrenier/grade-api:dev-latest
+    image: jeremiegrenier/grade-api:latest
     ports:
       - 81:80
     volumes:
