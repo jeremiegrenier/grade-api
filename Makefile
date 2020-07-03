@@ -4,7 +4,7 @@ SHELL := /bin/bash
 .PHONY: build cs docker-build docker-clean docker-create-db docker-dependency docker-fix-permissions docker-logs docker-run docker-run-test docker-sh docker-sh-db docker-stop help install it test
 
 ## Install project from scratch
-install: docker-build docker-run docker-dependency docker-create-db docker-create-schema
+install: docker-run docker-dependency docker-create-db docker-create-schema
 
 ## Clean system from docker image
 docker-clean:
