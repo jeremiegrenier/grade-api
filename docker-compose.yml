@@ -11,12 +11,18 @@ services:
       - .:/var/www
   database:
     image: postgres
+    volumes:
+      - data:/var/lib/postgresql/data
     ports:
       - "5432"
     env_file:
       - database.env
     expose:
       - 5432
-
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 18080:8080
 volumes:
-  grade-db:
+  data:

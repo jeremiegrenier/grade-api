@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Psr\Log\LoggerInterface;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,8 +24,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     /**
+     * Check if API is alive.
+     *
      * @Route("/ping", methods={"GET"})
      * @Route("/", methods={"GET"}, name="homepage")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="pong",
+     *     @SWG\Schema(type="object",
+     *         @SWG\Property(property="ping", type="string", default="pong")
+     *     )
+     * )
+     *
+     * @SWG\Tag(name="tests")
      */
     public function testApi(LoggerInterface $logger): JsonResponse
     {
