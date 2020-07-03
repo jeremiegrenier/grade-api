@@ -374,7 +374,7 @@ class StudentController extends AbstractController
         if (
             !\is_array($grade)
             || !\array_key_exists('value', $grade)
-            || !\is_int($grade['value'])
+            || (!\is_float($grade['value']) && !is_int($grade['value']))
             || !\array_key_exists('subject', $grade)
         ) {
             $logger->error(
