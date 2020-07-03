@@ -1,6 +1,11 @@
 .DEFAULT_GOAL := help
 SHELL := /bin/bash
 
+.PHONY: build cs docker-build docker-clean docker-create-db docker-dependency docker-fix-permissions docker-logs docker-run docker-run-test docker-sh docker-sh-db docker-stop help install it test
+
+## Install project from scratch
+install: docker-build docker-run docker-dependency docker-create-db docker-create-schema
+
 ## Clean system from docker image
 docker-clean:
 	docker system prune -a -f
@@ -21,6 +26,10 @@ docker-stop:
 docker-sh:
 	docker-compose exec grade-api sh
 
+## Attach to database Docker image
+docker-sh-db:
+	docker-compose exec database sh
+
 ## Watch logs from all Docker images
 docker-logs:
 	docker-compose --env-file docker-compose.env logs -f
@@ -28,6 +37,22 @@ docker-logs:
 ## Fix permission on docker image
 docker-fix-permissions:
 	docker-compose run --rm grade-api chown -R $$(id -u):$$(id -g) .
+
+## Create database on first install
+docker-create-db:
+	docker-compose exec grade-api sh -c 'php bin/console doctrine:database:create'
+
+## Create schema for database
+docker-create-schema:
+	docker-compose exec grade-api sh -c 'php bin/console doctrine:schema:create'
+
+## Install dependency
+docker-dependency:
+	docker-compose exec grade-api sh -c 'make build'
+
+## Run tests on launched docker image
+docker-run-test: docker-run
+	docker-compose exec grade-api sh -c 'make test'
 
 ## Install dependency inside docker image
 build:
