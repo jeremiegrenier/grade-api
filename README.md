@@ -5,7 +5,9 @@ This API manage grades for student.
 
 ## Installation
 
-You need to [install docker](https://docs.docker.com/engine/install/) to use this project
+You need to [install docker](https://docs.docker.com/engine/install/) to use this project.
+
+Docker images could be found on [docker hub](https://hub.docker.com/r/jeremiegrenier/grade-api)
 
 ```bash
 git clone https://github.com/jeremiegrenier/grade-api.git
