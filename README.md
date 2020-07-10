@@ -19,10 +19,6 @@ make install
 
 You can find how to use this API with [postman collection](./postman/gradeAPI.postman_collection.json)
 
-A [live example](http://gradeapi.jegr.ovh/api/ping) is available.
-
-A [swagger](http://gradeapi.jegr.ovh/api/doc) for live example is also available.
-
 _For more examples and usage, please refer to the [Wiki][wiki]._
 
 ## Development setup
